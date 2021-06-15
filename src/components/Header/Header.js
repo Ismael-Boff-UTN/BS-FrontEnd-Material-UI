@@ -7,8 +7,10 @@ import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundImage : "url(https://images.unsplash.com/photo-1490818387583-1baba5e638af?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTV8fHxlbnwwfHx8fA%3D%3D&w=1000&q=80)",
     padding: theme.spacing(8, 0, 6),
+    
+    
   },
   heroButtons: {
     marginTop: theme.spacing(4),

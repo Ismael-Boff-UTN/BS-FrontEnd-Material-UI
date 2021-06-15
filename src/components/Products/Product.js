@@ -6,6 +6,9 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+//Redux
+import { useDispatch } from "react-redux";
+import { obtenerArticulo } from "../../actions/cart";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -23,6 +26,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Product = ({ product }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const handleAddItemToCart = (id) => {
+    dispatch(obtenerArticulo(id));
+  };
   return (
     <>
       <Card className={classes.card}>
@@ -36,12 +43,11 @@ const Product = ({ product }) => {
             {product.denominacion}
           </Typography>
           <Typography>
-            This is a media card. You can use this section to describe the
-            content.
+            Precio : ${product.precioVenta}
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" color="primary">
+          <Button size="small" color="primary" onClick={()=> handleAddItemToCart(product._id)}>
             Add To Cart
           </Button>
         </CardActions>
