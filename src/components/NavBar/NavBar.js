@@ -1,22 +1,24 @@
 import React from "react";
+//Material UI
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
-import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Avatar from "@material-ui/core/Avatar";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import FastfoodIcon from "@material-ui/icons/Fastfood";
-//
+//Redux
 import { useSelector, useDispatch } from "react-redux";
 import { startLogout } from "../../actions/auth";
 import { GoogleLogout } from "react-google-login";
+
+import Cart from "./Cart";
+
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
@@ -86,6 +88,7 @@ export default function NavBar() {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
+
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
@@ -95,6 +98,9 @@ export default function NavBar() {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
@@ -104,24 +110,16 @@ export default function NavBar() {
     handleMobileMenuClose();
   };
 
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
+  const { nombre, apellido, img, google } = useSelector(
+    (state) => state.auth.resto
+  );
 
-  const { nombre, img, google } = useSelector((state) => state.auth.resto);
-  const cart = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(startLogout());
   };
 
-  //Items Totales Del Carrito
-  //var total = 0;
-
-  //cart.forEach((item) => {
-  // total += item.articulo.precioVenta;
-  //});
-
+  //Menu Perfil Usuario
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -169,12 +167,7 @@ export default function NavBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={cart.length} color="secondary">
-            <ShoppingCartIcon />
-          </Badge>
-        </IconButton>
-        <p>Carrito</p>
+        <Cart />
       </MenuItem>
 
       <MenuItem onClick={handleProfileMenuOpen}>
@@ -184,10 +177,9 @@ export default function NavBar() {
           aria-haspopup="true"
           color="inherit"
         >
-          <Typography className={classes.avatarName}>{nombre}</Typography>
           <Avatar alt="Remy Sharp" src={img} className={classes.large} />
         </IconButton>
-        <p>Perfil</p>
+        <Typography>Perfil</Typography>
       </MenuItem>
     </Menu>
   );
@@ -197,6 +189,7 @@ export default function NavBar() {
       <AppBar position="absolute">
         <Toolbar>
           <FastfoodIcon />
+          &nbsp;&nbsp;
           <Typography className={classes.title} variant="h6" noWrap>
             El Buen Sabor
           </Typography>
@@ -215,18 +208,9 @@ export default function NavBar() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton
-              aria-label="show 4 new mails"
-              color="inherit"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              edge="start"
-            >
-              <Badge badgeContent={cart.length} color="secondary">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
+            <MenuItem>
+              <Cart />
+            </MenuItem>
 
             <IconButton
               edge="start"
@@ -237,6 +221,7 @@ export default function NavBar() {
               color="inherit"
             >
               <Avatar alt="Remy Sharp" src={img} className={classes.large} />
+              &nbsp;{nombre + " " + apellido}
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
