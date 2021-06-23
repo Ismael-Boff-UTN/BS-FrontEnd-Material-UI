@@ -1,17 +1,17 @@
 import React from "react";
 //Material UI
-import { fade, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import SearchIcon from "@material-ui/icons/Search";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Avatar from "@material-ui/core/Avatar";
-import FastfoodIcon from "@material-ui/icons/Fastfood";
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 //Redux
 import { useSelector, useDispatch } from "react-redux";
 import { startLogout } from "../../actions/auth";
@@ -30,33 +30,16 @@ const useStyles = makeStyles((theme) => ({
       display: "block",
     },
   },
-  avatarName: {
-    alignContent: "center",
+  mainTitle: {
+    fontFamily: "Dancing Script",
+    fontSize: "30px",
   },
-  search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto",
-    },
+
+  avatarIcon: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
   },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
+
   inputRoot: {
     color: "inherit",
   },
@@ -110,9 +93,7 @@ export default function NavBar() {
     handleMobileMenuClose();
   };
 
-  const { nombre, apellido, img, google } = useSelector(
-    (state) => state.auth.resto
-  );
+  const { nombre, img, google } = useSelector((state) => state.auth.resto);
 
   const dispatch = useDispatch();
   const handleLogout = () => {
@@ -131,7 +112,11 @@ export default function NavBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Perfil</MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        {" "}
+        <AccountCircleOutlinedIcon />
+        &nbsp;&nbsp;Perfil
+      </MenuItem>
       {google === true ? (
         <GoogleLogout
           clientId="1068418280364-qlcmg4k58169if3h5jis6plnfmvml8e8.apps.googleusercontent.com"
@@ -142,14 +127,18 @@ export default function NavBar() {
               onClick={renderProps.onClick}
               disabled={renderProps.disabled}
             >
-              &nbsp;Cerrar Sesión
+              <ExitToAppIcon />
+              &nbsp;&nbsp;Cerrar Sesión
             </MenuItem>
           )}
           buttonText="Cerrar Sesión"
           onLogoutSuccess={handleLogout}
         ></GoogleLogout>
       ) : (
-        <MenuItem onClick={handleLogout}>Cerrar Sesión</MenuItem>
+        <MenuItem onClick={handleLogout}>
+          <ExitToAppIcon />
+          &nbsp;&nbsp;Cerrar Sesión
+        </MenuItem>
       )}
     </Menu>
   );
@@ -171,6 +160,7 @@ export default function NavBar() {
       </MenuItem>
 
       <MenuItem onClick={handleProfileMenuOpen}>
+        <Typography variant="h5">{nombre}</Typography>
         <IconButton
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"
@@ -178,34 +168,26 @@ export default function NavBar() {
           color="inherit"
         >
           <Avatar alt="Remy Sharp" src={img} className={classes.large} />
+          &nbsp;&nbsp;
+          <KeyboardArrowDownIcon />
         </IconButton>
-        <Typography>Perfil</Typography>
       </MenuItem>
     </Menu>
   );
 
   return (
     <div className={classes.grow}>
-      <AppBar position="absolute">
+      <AppBar position="absolute" style={{ background: "#f52f41" }}>
         <Toolbar>
-          <FastfoodIcon />
+          <Avatar
+            alt="Remy Sharp"
+            src="assets/images/logo2.png"
+            className={classes.large}
+          />
           &nbsp;&nbsp;
-          <Typography className={classes.title} variant="h6" noWrap>
+          <Typography className={classes.mainTitle} variant="h6" noWrap>
             El Buen Sabor
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <MenuItem>
@@ -220,8 +202,14 @@ export default function NavBar() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <Avatar alt="Remy Sharp" src={img} className={classes.large} />
-              &nbsp;{nombre + " " + apellido}
+              <Avatar
+                alt="Remy Sharp"
+                src={img}
+                className={classes.avatarIcon}
+              />
+              &nbsp;{nombre}
+              &nbsp;&nbsp;
+              <KeyboardArrowDownIcon />
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>

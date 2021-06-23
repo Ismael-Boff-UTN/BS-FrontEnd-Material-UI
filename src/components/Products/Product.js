@@ -5,7 +5,11 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import CardHeader from "@material-ui/core/CardHeader/CardHeader";
+import Avatar from "@material-ui/core/Avatar/Avatar";
+import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
+import Chip from "@material-ui/core/Chip/Chip";
 //Redux
 import { useDispatch } from "react-redux";
 import { obtenerArticulo } from "../../actions/cart";
@@ -18,9 +22,19 @@ const useStyles = makeStyles((theme) => ({
   },
   cardMedia: {
     paddingTop: "80.25%", // 16:9
+    borderRadius: "10px",
   },
   cardContent: {
     flexGrow: 1,
+  },
+  buttonStyles: {
+    borderRadius: "20px",
+    background: "#f52f41",
+    "&:hover": {
+      backgroundColor: "#0069d9",
+      borderColor: "#0062cc",
+      boxShadow: "none",
+    },
   },
 }));
 
@@ -33,23 +47,40 @@ const Product = ({ product }) => {
   return (
     <>
       <Card className={classes.card}>
+        <CardHeader
+          avatar={
+            <Avatar
+              aria-label="recipe"
+              variant="rounded"
+              className={classes.avatar}
+            ></Avatar>
+          }
+          title={product.denominacion}
+          subheader={`Tiempo Preparación : ${product.tiempoEstimadoCocina}`}
+        />
         <CardMedia
           className={classes.cardMedia}
           image={product.imagen}
           title="Image title"
         />
-        <CardContent className={classes.cardContent}>
-          <Typography gutterBottom variant="h5" component="h2">
-            {product.denominacion}
-          </Typography>
-          <Typography>
-            Precio : ${product.precioVenta}
-          </Typography>
-        </CardContent>
+        <CardContent className={classes.cardContent}></CardContent>
         <CardActions>
-          <Button size="small" color="primary" onClick={()=> handleAddItemToCart(product._id)}>
-            Add To Cart
+          <Button
+            className={classes.buttonStyles}
+            size="medium"
+            color="primary"
+            variant="contained"
+            onClick={() => handleAddItemToCart(product._id)}
+          >
+            <AddShoppingCartIcon /> &nbsp;&nbsp; Comprar
           </Button>
+
+          <Chip
+            variant="outlined"
+            color="secondary"
+            icon={<MonetizationOnIcon />}
+            label={"Precio : " + product.precioVenta}
+          />
         </CardActions>
       </Card>
     </>

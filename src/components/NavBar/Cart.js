@@ -13,6 +13,8 @@ import Badge from "@material-ui/core/Badge";
 import Chip from "@material-ui/core/Chip/Chip";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
 import Divider from "@material-ui/core/Divider";
+import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 
 //
 
@@ -96,11 +98,14 @@ export default function CustomizedDialogs() {
         onClick={handleClickOpen}
         edge="start"
       >
-        &nbsp;Carrito
-        <Badge badgeContent={cart.length} color="secondary">
+        &nbsp;&nbsp;Carrito
+        <Badge badgeContent={cart.length} color="primary">
           <ShoppingCartIcon />
         </Badge>
+        &nbsp;&nbsp;
+        <KeyboardArrowDownIcon />
       </IconButton>
+
       <Dialog
         fullWidth="true"
         maxWidth="md"
@@ -115,7 +120,10 @@ export default function CustomizedDialogs() {
         </DialogTitle>
         <DialogContent dividers>
           {(cart.length === 0) | null ? (
-            <Typography>Sin Articulos</Typography>
+            <Typography>
+              <RemoveShoppingCartIcon />
+              Sin Articulos
+            </Typography>
           ) : (
             <List>
               {cart.map((item) => (

@@ -1,9 +1,9 @@
 import React from "react";
 //Mis Componentes
 import NavBar from "./NavBar/NavBar";
-import Header from './Header/Header';
+import Header from "./Header/Header";
 import Product from "./Products/Product";
-import Footer from './Footer/Footer';
+import Footer from "./Footer/Footer";
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
   },
   cardMedia: {
-    paddingTop: "56.25%", // 16:9
+    paddingTop: "50.25%", // 16:9
   },
   cardContent: {
     flexGrow: 1,
@@ -50,7 +50,7 @@ export const ProductsList = () => {
   return (
     <>
       <NavBar />
-      <Header/>
+      <Header />
       <Container className={classes.cardGrid} maxWidth="md">
         <Grid container spacing={4}>
           {articulos.map((art) => (
@@ -60,7 +60,7 @@ export const ProductsList = () => {
           ))}
         </Grid>
       </Container>
-      <Footer/>
+      <Footer />
     </>
   );
 };

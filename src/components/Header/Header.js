@@ -1,19 +1,53 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { fade, makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
-    backgroundImage : "url(https://images.unsplash.com/photo-1490818387583-1baba5e638af?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTV8fHxlbnwwfHx8fA%3D%3D&w=1000&q=80)",
-    padding: theme.spacing(8, 0, 6),
-    
-    
+    backgroundImage: "url(https://wallpaperaccess.com/full/1976684.jpg)",
+    padding: theme.spacing(8, 0, 70),
+    backgroundPosition: ("50%", "10px", "10px", "10px"),
+    //[ <percentage> | <length> | left | center | right  ]
+
+    marginTop: "60px",
   },
   heroButtons: {
     marginTop: theme.spacing(4),
+  },
+  heroText: {
+    backgroundColor: "white",
+    borderRadius: "10px",
+    fontFamily: "Dancing Script",
+  },
+  heroTextSecondary: {
+    backgroundColor: "white",
+    borderRadius: "10px",
+  },
+  search: {
+    position: "absolute",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    "&:hover": {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(3),
+      width: "auto",
+    },
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
 }));
 
@@ -29,6 +63,7 @@ const Header = () => {
             align="center"
             color="textPrimary"
             gutterBottom
+            className={classes.heroText}
           >
             Bienvenido Al Buen Sabor!
           </Typography>
@@ -37,24 +72,14 @@ const Header = () => {
             align="center"
             color="textSecondary"
             paragraph
+            className={classes.heroTextSecondary}
           >
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley
           </Typography>
           <div className={classes.heroButtons}>
-            <Grid container spacing={2} justify="center">
-              <Grid item>
-                <Button variant="contained" color="primary">
-                  Main call to action
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button variant="outlined" color="primary">
-                  Secondary action
-                </Button>
-              </Grid>
-            </Grid>
+            <Grid container justify="center"></Grid>
           </div>
         </Container>
       </div>
