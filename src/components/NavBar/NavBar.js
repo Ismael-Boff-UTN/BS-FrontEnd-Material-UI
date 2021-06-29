@@ -1,4 +1,5 @@
 import React from "react";
+import { Link as RouterLink } from "react-router-dom";
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -112,11 +113,11 @@ export default function NavBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>
-        {" "}
+      <MenuItem component={RouterLink} to="/user-profile">
         <AccountCircleOutlinedIcon />
         &nbsp;&nbsp;Perfil
       </MenuItem>
+
       {google === true ? (
         <GoogleLogout
           clientId="1068418280364-qlcmg4k58169if3h5jis6plnfmvml8e8.apps.googleusercontent.com"
