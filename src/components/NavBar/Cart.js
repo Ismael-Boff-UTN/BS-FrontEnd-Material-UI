@@ -9,6 +9,10 @@ import Typography from "@material-ui/core/Typography";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Badge from "@material-ui/core/Badge";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
+import Appbar from '@material-ui/core/AppBar';
+import Toolbar from "@material-ui/core/Toolbar";
+import DialogActions from '@material-ui/core/DialogActions';
+import Button from '@material-ui/core/Button';
 
 //
 
@@ -88,16 +92,23 @@ export default function CustomizedDialogs() {
         aria-labelledby="customized-dialog-title"
         open={open}
         //fullScreen
-        PaperProps={{
-          style: { borderRadius: 20 },
-        }}
       >
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Carrito De Compras
+         <Appbar position="absolute" style={{ background: "#f52f41" }}>
+           <Toolbar>
+             Carrito De Compras
+           </Toolbar>
+         </Appbar>
         </DialogTitle>
         <DialogContent dividers>
           <Checkout />
         </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Seguir Comprando!
+          </Button>
+          
+        </DialogActions>
       </Dialog>
     </div>
   );

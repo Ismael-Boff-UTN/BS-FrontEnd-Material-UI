@@ -8,6 +8,7 @@ import Grid from "@material-ui/core/Grid";
 import { useSelector } from "react-redux";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
+import Divider from "@material-ui/core/Divider/Divider";
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -38,26 +39,31 @@ export default function ReviewOrder() {
         Productos En Carrito
       </Typography>
       <List disablePadding>
-        {cart.map((item) => (
+        {cart.length <= 0 ? <Typography>Sin Articulos Agregados</Typography> : cart.map((item) => (
+          <>
           <ListItem className={classes.listItem} key={item.articulo._id}>
             <ListItemAvatar>
               <Avatar src={item.articulo.imagen} />
             </ListItemAvatar>
             <ListItemText
               primary={item.articulo.denominacion}
-              secondary="secondary text"
+              secondary={item.articulo.categoria}
             />
             <Typography variant="body2">
               $ {item.articulo.precioVenta}
             </Typography>
           </ListItem>
+           <Divider/>
+           <ListItem className={classes.listItem}>
+            
+             <ListItemText primary="Total" />
+             <Typography variant="subtitle1" className={classes.total}>
+               ${total}
+             </Typography>
+           </ListItem>
+           </>
         ))}
-        <ListItem className={classes.listItem}>
-          <ListItemText primary="Total" />
-          <Typography variant="subtitle1" className={classes.total}>
-            ${total}
-          </Typography>
-        </ListItem>
+        
       </List>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}></Grid>

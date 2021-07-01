@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
     [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
       marginTop: theme.spacing(6),
       marginBottom: theme.spacing(6),
@@ -44,8 +44,9 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(1),
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
     borderRadius: 20,
-    color : "white"
+    color: "white",
   },
+  
 }));
 
 const steps = ["Estado De La Orden", "Domicilio De Envio", "Detalles De Pago"];
@@ -82,10 +83,13 @@ export default function Checkout() {
 
       <main className={classes.layout}>
         <Paper className={classes.paper}>
-          <Typography component="h1" variant="h4" align="center">
-            Checkout
-          </Typography>
-          <Stepper activeStep={activeStep} className={classes.stepper}>
+         
+          <Stepper
+            activeStep={activeStep}
+            className={classes.stepper}
+            nonLinear
+            alternativeLabel
+          >
             {steps.map((label) => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>

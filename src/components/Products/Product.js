@@ -56,7 +56,8 @@ const Product = ({ product }) => {
             ></Avatar>
           }
           title={product.denominacion}
-          subheader={`Tiempo Preparación : ${product.tiempoEstimadoCocina}`}
+          
+          subheader={product.tiempoEstimadoCocina > 0 ? `Tiempo Preparación : ${product.tiempoEstimadoCocina} min.` : ""}
         />
         <CardMedia
           className={classes.cardMedia}
