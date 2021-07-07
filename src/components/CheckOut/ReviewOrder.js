@@ -54,16 +54,16 @@ export default function ReviewOrder() {
             </Typography>
           </ListItem>
            <Divider/>
-           <ListItem className={classes.listItem}>
-            
-             <ListItemText primary="Total" />
-             <Typography variant="subtitle1" className={classes.total}>
-               ${total}
-             </Typography>
-           </ListItem>
+          
            </>
         ))}
-        
+         <ListItem className={classes.listItem}>
+            
+            <ListItemText primary="Total" />
+            <Typography variant="subtitle1" className={classes.total}>
+              ${total}
+            </Typography>
+          </ListItem>
       </List>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}></Grid>

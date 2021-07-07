@@ -1,5 +1,4 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -12,13 +11,14 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import Avatar from "@material-ui/core/Avatar";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
+
 //Redux
 import { useSelector, useDispatch } from "react-redux";
 import { startLogout } from "../../actions/auth";
 import { GoogleLogout } from "react-google-login";
 
 import Cart from "./Cart";
+import Profile from "../UserProfile/Profile";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -113,10 +113,7 @@ export default function NavBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem component={RouterLink} to="/user-profile">
-        <AccountCircleOutlinedIcon />
-        &nbsp;&nbsp;Perfil
-      </MenuItem>
+      <Profile />
 
       {google === true ? (
         <GoogleLogout

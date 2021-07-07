@@ -9,13 +9,10 @@ import Typography from "@material-ui/core/Typography";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Badge from "@material-ui/core/Badge";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
-import Appbar from '@material-ui/core/AppBar';
+import Appbar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import DialogActions from '@material-ui/core/DialogActions';
-import Button from '@material-ui/core/Button';
-
-//
-
+import DialogActions from "@material-ui/core/DialogActions";
+import Button from "@material-ui/core/Button";
 import Checkout from "../CheckOut/Checkout";
 
 import { useSelector } from "react-redux";
@@ -94,11 +91,9 @@ export default function CustomizedDialogs() {
         //fullScreen
       >
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-         <Appbar position="absolute" style={{ background: "#f52f41" }}>
-           <Toolbar>
-             Carrito De Compras
-           </Toolbar>
-         </Appbar>
+          <Appbar position="absolute" style={{ background: "#f52f41" }}>
+            <Toolbar>Carrito De Compras</Toolbar>
+          </Appbar>
         </DialogTitle>
         <DialogContent dividers>
           <Checkout />
@@ -107,7 +102,6 @@ export default function CustomizedDialogs() {
           <Button onClick={handleClose} color="primary">
             Seguir Comprando!
           </Button>
-          
         </DialogActions>
       </Dialog>
     </div>
