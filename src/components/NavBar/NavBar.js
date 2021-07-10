@@ -19,7 +19,6 @@ import { GoogleLogout } from "react-google-login";
 
 import Cart from "./Cart";
 import Profile from "../UserProfile/Profile";
-import Categorias from "../Header/Categorias";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
