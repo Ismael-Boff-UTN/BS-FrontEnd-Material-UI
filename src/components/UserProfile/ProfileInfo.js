@@ -2,27 +2,16 @@ import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import PedidosTable from "./PedidosTable";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
     marginTop: "20px",
-  },
-  image: {
-    backgroundImage:
-      "url(https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80)",
-    backgroundRepeat: "no-repeat",
-    backgroundColor:
-      theme.palette.type === "light"
-        ? theme.palette.grey[50]
-        : theme.palette.grey[900],
-    backgroundSize: "cover",
-    backgroundPosition: "center",
   },
   paper: {
     margin: theme.spacing(8, 4),
@@ -51,15 +40,18 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 20,
   },
   logo: {
-    maxHeight: "130px",
-    maxWidth: "130px",
+    marginTop : "100px",
+    maxHeight: "200px",
+    maxWidth: "200px",
     borderRadius: 50,
+    justifyContent : "center"
   },
 }));
 
 const ProfileInfo = ({ usuario }) => {
   const classes = useStyles();
   const [editar, setEditar] = useState(true);
+  //const [user, setUser] = useState(usuario);
 
   const onEditar = (e) => {
     e.preventDefault();
@@ -73,24 +65,21 @@ const ProfileInfo = ({ usuario }) => {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image}>
-        <ul>
-          {usuario.pedidos.map((pedido) => (
-            <>
-              <li>Fecha Pedido : {pedido.fecha}</li>
-              <li>Tipo Envio : {pedido.tipoEnvio}</li>
-              <li>Estado : {pedido.estado}</li>
-            </>
-          ))}
-        </ul>
-      </Grid>
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <img src={usuario.img} className={classes.logo} alt="logito" />
+      <Grid Grid container spacing={2}>
+        <Grid Grid item xs={12} sm={6} container justify = "center">
+          <div>
+            <img src={usuario.img} className={classes.logo} alt="fotoPerfil" />
 
-          <Typography component="h1" variant="h5" className={classes.mainTitle}>
-            {usuario.nombre + " " + usuario.apellido}
-          </Typography>
+            <Typography
+              component="h1"
+              variant="h5"
+              className={classes.mainTitle}
+            >
+              {usuario.nombre + " " + usuario.apellido}
+            </Typography>
+          </div>
+        </Grid>
+        <Grid Grid item xs={12} sm={6}>
           <form className={classes.form} noValidate>
             <TextField
               variant="outlined"
@@ -117,6 +106,7 @@ const ProfileInfo = ({ usuario }) => {
               defaultValue={usuario.telefono}
               disabled={editar}
             />
+            <Typography>Domicilio Fiscal</Typography>
             <TextField
               variant="outlined"
               margin="normal"
@@ -166,17 +156,30 @@ const ProfileInfo = ({ usuario }) => {
                 Editar
               </Button>
             ) : (
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="secondary"
-                className={classes.submit}
-                size="large"
-                onClick={onCancelEdit}
-              >
-                Cancelar
-              </Button>
+              <>
+                <Button
+                  type="submit"
+                  //fullWidth
+                  variant="contained"
+                  color="secondary"
+                  className={classes.submit}
+                  size="large"
+                  onClick={onCancelEdit}
+                >
+                  Cancelar
+                </Button>
+                <Button
+                  type="submit"
+                  //fullWidth
+                  variant="contained"
+                  color="secondary"
+                  className={classes.submit}
+                  size="large"
+                  //onClick={onCancelEdit}
+                >
+                  Guardar Cambios
+                </Button>
+              </>
             )}
 
             <Grid container>
@@ -185,7 +188,11 @@ const ProfileInfo = ({ usuario }) => {
             </Grid>
             <Box mt={5}></Box>
           </form>
-        </div>
+        </Grid>
+      </Grid>
+
+      <Grid item xs={12} sm={12}>
+        <PedidosTable pedidos={usuario.pedidos} />
       </Grid>
     </Grid>
   );

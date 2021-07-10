@@ -4,6 +4,7 @@ import NavBar from "./NavBar/NavBar";
 import Header from "./Header/Header";
 import Product from "./Products/Product";
 import Footer from "./Footer/Footer";
+import Categorias from './Header/Categorias';
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -51,6 +52,7 @@ export const ProductsList = () => {
     <>
       <NavBar />
       <Header />
+      <Categorias/>
       <Container className={classes.cardGrid} maxWidth="md">
         <Grid container spacing={4}>
           {articulos.map((art) => (

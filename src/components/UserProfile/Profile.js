@@ -91,7 +91,7 @@ export default function CustomizedDialogs() {
           </Appbar>
         </DialogTitle>
         <DialogContent dividers>
-          <ProfileInfo usuario={usuario}/>
+          <ProfileInfo usuario={usuario} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

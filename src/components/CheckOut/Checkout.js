@@ -11,6 +11,7 @@ import AddressForm from "./DomicilioForm";
 import PaymentForm from "./PagosForm";
 import Review from "./ReviewOrder";
 
+
 const useStyles = makeStyles((theme) => ({
   layout: {
     width: "auto",
@@ -46,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 20,
     color: "white",
   },
-  
 }));
 
 const steps = ["Estado De La Orden", "Domicilio De Envio", "Detalles De Pago"];
@@ -83,7 +83,6 @@ export default function Checkout() {
 
       <main className={classes.layout}>
         <Paper className={classes.paper}>
-         
           <Stepper
             activeStep={activeStep}
             className={classes.stepper}
@@ -116,6 +115,7 @@ export default function Checkout() {
                       Volver
                     </Button>
                   )}
+
                   <Button
                     variant="contained"
                     color="primary"
