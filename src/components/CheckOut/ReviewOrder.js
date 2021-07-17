@@ -5,10 +5,16 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Grid from "@material-ui/core/Grid";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Divider from "@material-ui/core/Divider/Divider";
+
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import CancelIcon from "@material-ui/icons/Cancel";
+import IconButton from "@material-ui/core/IconButton";
+
+import { quitarArticuloCart } from "../../actions/cart";
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -20,54 +26,72 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginTop: theme.spacing(2),
   },
+  precio: {
+    marginRight: "75px",
+  },
 }));
 
 export default function ReviewOrder() {
   const classes = useStyles();
-  const cart = useSelector((state) => state.cart.cart);
+  const cart = useSelector((state) => state.cart.items);
+  const dispatch = useDispatch();
+  
 
   //Items Totales Del Carrito
   var total = 0;
 
   cart.forEach((item) => {
-    total += item.articulo.precioVenta;
+    total += item.precioVenta;
   });
 
+  const quitarArticulo = (id) =>{
+    dispatch(quitarArticuloCart(id));
+  }
+
   return (
-    <React.Fragment>
+    <>
+    <Grid>
       <Typography variant="h6" gutterBottom>
         Productos En Carrito
       </Typography>
       <List disablePadding>
-        {cart.length <= 0 ? <Typography>Sin Articulos Agregados</Typography> : cart.map((item) => (
-          <>
-          <ListItem className={classes.listItem} key={item.articulo._id}>
-            <ListItemAvatar>
-              <Avatar src={item.articulo.imagen} />
-            </ListItemAvatar>
-            <ListItemText
-              primary={item.articulo.denominacion}
-              secondary={item.articulo.categoria}
-            />
-            <Typography variant="body2">
-              $ {item.articulo.precioVenta}
-            </Typography>
-          </ListItem>
-           <Divider/>
-          
-           </>
-        ))}
-         <ListItem className={classes.listItem}>
-            
-            <ListItemText primary="Total" />
-            <Typography variant="subtitle1" className={classes.total}>
-              ${total}
-            </Typography>
-          </ListItem>
+        {cart.length <= 0 ? (
+          <Typography>Sin Articulos Agregados</Typography>
+        ) : (
+          cart.map((item) => (
+            <>
+              <ListItem className={classes.listItem} key={item._id}>
+                <ListItemAvatar>
+                  <Avatar src={item.imagen} />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={item.denominacion}
+                  secondary={item.categoria}
+                />
+
+                <ListItemSecondaryAction>
+                  <IconButton edge="end" aria-label="delete" onClick={() => quitarArticulo(item._id)}>
+                    <CancelIcon />
+                  </IconButton>
+                </ListItemSecondaryAction>
+                <ListItemSecondaryAction className={classes.precio}>
+                  <Typography variant="body2" edge="start">
+                    $ {item.precioVenta}
+                  </Typography>
+                </ListItemSecondaryAction>
+              </ListItem>
+              <Divider />
+            </>
+          ))
+        )}
+        <ListItem className={classes.listItem}>
+          <ListItemText primary="Total" />
+          <Typography variant="subtitle1" className={classes.total}>
+            ${total}
+          </Typography>
+        </ListItem>
       </List>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}></Grid>
       </Grid>
-    </React.Fragment>
+    </>
   );
 }

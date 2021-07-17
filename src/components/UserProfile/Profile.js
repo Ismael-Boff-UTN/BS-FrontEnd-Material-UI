@@ -8,8 +8,6 @@ import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import Appbar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import DialogActions from "@material-ui/core/DialogActions";
-import Button from "@material-ui/core/Button";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 import MenuItem from "@material-ui/core/MenuItem";
 import ProfileInfo from "./ProfileInfo";
@@ -87,17 +85,22 @@ export default function CustomizedDialogs() {
       >
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           <Appbar position="absolute" style={{ background: "#f52f41" }}>
-            <Toolbar>Mi Perfil - {usuario.nombre}</Toolbar>
+            <Toolbar>
+              Mi Perfil - {usuario.nombre}
+              <IconButton
+                edge="end"
+                color="inherit"
+                onClick={handleClose}
+                aria-label="close"
+              >
+                <CloseIcon />
+              </IconButton>
+            </Toolbar>
           </Appbar>
         </DialogTitle>
         <DialogContent dividers>
           <ProfileInfo usuario={usuario} />
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cerrar
-          </Button>
-        </DialogActions>
       </Dialog>
     </div>
   );

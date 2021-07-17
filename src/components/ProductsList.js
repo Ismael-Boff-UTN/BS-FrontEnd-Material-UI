@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const ProductsList = () => {
-  const articulos = useSelector((state) => state.article.articulos);
+  const articulos = useSelector((state) => state.articles.articles);
   const classes = useStyles();
 
   return (

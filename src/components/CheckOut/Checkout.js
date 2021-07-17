@@ -11,7 +11,6 @@ import AddressForm from "./DomicilioForm";
 import PaymentForm from "./PagosForm";
 import Review from "./ReviewOrder";
 
-
 const useStyles = makeStyles((theme) => ({
   layout: {
     width: "auto",
@@ -78,60 +77,58 @@ export default function Checkout() {
   };
 
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
 
-      <main className={classes.layout}>
-        <Paper className={classes.paper}>
-          <Stepper
-            activeStep={activeStep}
-            className={classes.stepper}
-            nonLinear
-            alternativeLabel
-          >
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-          <React.Fragment>
-            {activeStep === steps.length ? (
-              <React.Fragment>
-                <Typography variant="h5" gutterBottom>
-                  Gracias Por Su Compra!
-                </Typography>
-                <Typography variant="subtitle1">
-                  Su Numero De Orden Es #1234653, Se Ha Enviado Un E-Mail Con
-                  Detalles De Su Compra.
-                </Typography>
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                {getStepContent(activeStep)}
-                <div className={classes.buttons}>
-                  {activeStep !== 0 && (
-                    <Button onClick={handleBack} className={classes.button}>
-                      Volver
-                    </Button>
-                  )}
-
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    {activeStep === steps.length - 1
-                      ? "Finalizar Compra"
-                      : "Siguiente"}
+      <Paper className={classes.paper}>
+        <Stepper
+          activeStep={activeStep}
+          className={classes.stepper}
+          nonLinear
+          alternativeLabel
+        >
+          {steps.map((label) => (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+        <React.Fragment>
+          {activeStep === steps.length ? (
+            <React.Fragment>
+              <Typography variant="h5" gutterBottom>
+                Gracias Por Su Compra!
+              </Typography>
+              <Typography variant="subtitle1">
+                Su Numero De Orden Es #1234653, Se Ha Enviado Un E-Mail Con
+                Detalles De Su Compra.
+              </Typography>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              {getStepContent(activeStep)}
+              <div className={classes.buttons}>
+                {activeStep !== 0 && (
+                  <Button onClick={handleBack} className={classes.button}>
+                    Volver
                   </Button>
-                </div>
-              </React.Fragment>
-            )}
-          </React.Fragment>
-        </Paper>
-      </main>
-    </React.Fragment>
+                )}
+
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleNext}
+                  className={classes.button}
+                >
+                  {activeStep === steps.length - 1
+                    ? "Finalizar Compra"
+                    : "Siguiente"}
+                </Button>
+              </div>
+            </React.Fragment>
+          )}
+        </React.Fragment>
+      </Paper>
+    </>
   );
 }

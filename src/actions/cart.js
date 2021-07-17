@@ -14,12 +14,8 @@ export const obtenerArticulo = (id) => {
     console.log(body);
 
     if (body.status) {
-      dispatch(
-        articulo({
-          articulo: body.articulo,
-        })
-      );
-      Swal.fire("Exito", `Item Agregado`, "success");
+      dispatch(articulo(body.articulo));
+      Swal.fire("Exito", `${body.articulo.denominacion} x1 Agregado!`, "success");
     } else {
       Swal.fire("Error", `${body.msg}`, "warning");
     }
@@ -33,15 +29,11 @@ const articulo = (articulo) => ({
 
 export const quitarArticuloCart = (id) => {
   return async (dispatch) => {
-    dispatch(
-      articuloQuit(id),
-      console.log(id)
-    );
+    dispatch(articuloQuit(id), console.log(id));
   };
 };
 
 const articuloQuit = (id) => ({
   type: types.articleQuit,
   payload: id,
-  
 });

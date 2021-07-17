@@ -4,30 +4,26 @@ import Swal from "sweetalert2";
 
 //Funcion Que Trae Todas Los Articulos
 export const obtenerArticulos = () => {
-    return async (dispatch) => {
-      const response = await fetchNoToken(
-        "articulos",
-  
-        "GET"
+  return async (dispatch) => {
+    const response = await fetchNoToken("articulos", "GET");
+    const body = await response.json();
+    //console.log(body);
+
+    if (body.status) {
+      dispatch(
+        articulos({
+          articles: body.articulos,
+
+          msg: body.msg,
+        })
       );
-      const body = await response.json();
-      //console.log(body);
-  
-      if (body.status) {
-        dispatch(
-            articulos({
-            articulos: body.articulos,
-            //totalResgistros: body.totalRegistros,
-            msg: body.msg,
-          })
-        );
-      } else {
-        Swal.fire("Error", `${body.msg}`, "warning");
-      }
-    };
+    } else {
+      Swal.fire("Error", `${body.msg}`, "warning");
+    }
   };
-  
-  const articulos = (articulo) => ({
-    type: types.articlesGetAll,
-    payload: articulo,
-  });
+};
+
+const articulos = (articulo) => ({
+  type: types.articlesGetAll,
+  payload: articulo,
+});

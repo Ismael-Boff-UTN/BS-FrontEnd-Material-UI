@@ -14,7 +14,7 @@ const PedidosTable = ({ pedidos }) => {
     },
     {
       title: "Tipo Envio",
-      field: "estado",
+      field: "tipoEnvio",
     },
     {
       title: "Total",

@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import { useSelector } from "react-redux";
 
 export default function DomicilioForm() {
-    const { nombre, apellido, domicilio, telefono } = useSelector((state) => state.auth.resto);
+  const { nombre, apellido, domicilio, telefono } = useSelector((state) => state.auth.resto);
    
   return (
     <React.Fragment>

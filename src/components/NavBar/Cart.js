@@ -11,9 +11,8 @@ import Badge from "@material-ui/core/Badge";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import Appbar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import DialogActions from "@material-ui/core/DialogActions";
-import Button from "@material-ui/core/Button";
 import Checkout from "../CheckOut/Checkout";
+import Grid from "@material-ui/core/Grid";
 
 import { useSelector } from "react-redux";
 
@@ -56,7 +55,7 @@ const DialogContent = withStyles((theme) => ({
 
 export default function CustomizedDialogs() {
   const [open, setOpen] = React.useState(false);
-  const cart = useSelector((state) => state.cart.cart);
+  const cart = useSelector((state) => state.cart.items);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -92,17 +91,27 @@ export default function CustomizedDialogs() {
       >
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           <Appbar position="absolute" style={{ background: "#f52f41" }}>
-            <Toolbar>Carrito De Compras</Toolbar>
+            <Toolbar>
+              Carrito De Compras
+              <IconButton
+                edge="end"
+                color="inherit"
+                onClick={handleClose}
+                aria-label="close"
+              >
+                <CloseIcon />
+              </IconButton>
+            </Toolbar>
           </Appbar>
         </DialogTitle>
         <DialogContent dividers>
-          <Checkout />
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={12}>
+              <Checkout />
+            </Grid>
+          </Grid>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Seguir Comprando!
-          </Button>
-        </DialogActions>
+       
       </Dialog>
     </div>
   );

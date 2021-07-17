@@ -7,6 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import PedidosTable from "./PedidosTable";
+import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,18 +34,20 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "30px",
   },
   mainTitle: {
-    fontFamily: "Dancing Script",
     fontSize: "30px",
+    marginTop: "30px",
+    justifyContent: "center",
   },
   googleLoginButton: {
     borderRadius: 20,
   },
   logo: {
-    marginTop : "100px",
+    marginTop: "100px",
     maxHeight: "200px",
     maxWidth: "200px",
-    borderRadius: 50,
-    justifyContent : "center"
+    minHeight: "200px",
+    minWidth: "200px",
+    alignContent : "center"
   },
 }));
 
@@ -66,9 +69,14 @@ const ProfileInfo = ({ usuario }) => {
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid Grid container spacing={2}>
-        <Grid Grid item xs={12} sm={6} container justify = "center">
+        <Grid Grid item xs={12} sm={6} container justify="center">
           <div>
-            <img src={usuario.img} className={classes.logo} alt="fotoPerfil" />
+            <Avatar
+              src={usuario.img}
+              className={classes.logo}
+              alt="fotoPerfil"
+              variant="circle"
+            />
 
             <Typography
               component="h1"
