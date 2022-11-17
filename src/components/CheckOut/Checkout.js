@@ -10,7 +10,8 @@ import Typography from "@material-ui/core/Typography";
 import AddressForm from "./DomicilioForm";
 import PaymentForm from "./PagosForm";
 import Review from "./ReviewOrder";
-
+import axios from "axios";
+import swal from "sweetalert2";
 const useStyles = makeStyles((theme) => ({
   layout: {
     width: "auto",
@@ -67,8 +68,54 @@ function getStepContent(step) {
 export default function Checkout() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const token = localStorage.getItem("token");
+  const prueba={"items": [
+    {
+      "title": "Test",
+      "quantity": 1,
+      "currency_id": "ARS",
+      "unit_price": 10.5
+    },
+{
+      "title": "Test2",
+      "quantity": 1,
+      "currency_id": "ARS",
+      "unit_price": 20.5
+    }
+  ]}
+  const handleNext = (e) => {
+    if(activeStep === steps.length - 1){
+      e.preventDefault();
+//getear datos store, si es mp post mp y en endpoint crear entidad pedidos conw status
+//si es efectivo otro endpoint sin el mp
 
-  const handleNext = () => {
+//al finalizar compra borrar carrito de store
+
+/*       if (
+        producto.denominacion === "" ||
+        producto.precioVenta === "" ||
+        producto.tiempoEstimadoCocina === "" ||
+        producto.imagen === "" ||
+        producto.esManufacturado === ""
+      ) {
+        alert("Campos Vacios");
+      } */
+  
+      axios
+        .post("http://localhost:4000/api/pagomp", prueba, {
+          headers: {
+            "x-token": token,
+          },
+        })
+        .then((res) => {
+          //console.log(res);
+          console.log(res.data);
+          swal.fire("", `${res.data.msg}`, "success");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
     setActiveStep(activeStep + 1);
   };
 
