@@ -42,7 +42,7 @@ export default function SingleLineImageList() {
 
   useEffect(() => {
     axios
-      .get("https://buen-sabor-api.herokuapp.com/api/categorias")
+      .get("http://localhost:4000/api/categorias")
       .then((response) => {
         // Obtenemos los datos
 
