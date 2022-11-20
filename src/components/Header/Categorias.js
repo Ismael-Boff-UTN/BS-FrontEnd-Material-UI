@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
     justifyContent: "space-around",
     overflow: "hidden",
-    backgroundColor: theme.palette.background.paper,
+    background: 'rgba(255, 248, 232, 1)'
   },
   imageList: {
     flexWrap: "nowrap",
@@ -42,7 +42,7 @@ export default function SingleLineImageList() {
 
   useEffect(() => {
     axios
-      .get("https://buen-sabor-api.herokuapp.com/api/categorias")
+      .get("http://localhost:4000/api/categorias")
       .then((response) => {
         // Obtenemos los datos
 
@@ -62,7 +62,6 @@ export default function SingleLineImageList() {
             <img src={categoria.img} alt={categoria.nombre} />
             <ImageListItemBar
               title={categoria.nombre}
-              subtitle={<span>by: </span>}
               actionIcon={
                 <IconButton
                   aria-label={`info about `}

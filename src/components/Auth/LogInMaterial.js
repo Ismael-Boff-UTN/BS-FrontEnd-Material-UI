@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,9 +12,11 @@ import { makeStyles } from "@material-ui/core/styles";
 //
 import { useDispatch } from "react-redux";
 import { Link as LinkRouter } from "react-router-dom";
-import { GoogleLogin } from "react-google-login";
+//import { GoogleLogin } from "react-google-login";
 import { startLogin, startLoginGoogle } from "../../actions/auth";
 import swal from "sweetalert2";
+import { GoogleLogin } from '@react-oauth/google';
+
 
 function Copyright() {
   return (
@@ -75,10 +77,12 @@ const useStyles = makeStyles((theme) => ({
 
 const LogInMaterial = () => {
   const classes = useStyles();
+  
+  //Login de google
   const responseGoogle = (response) => {
     console.log(response);
 
-    var id_token = response.tokenId;
+    var id_token = response.credential;
 
     dispatch(startLoginGoogle(id_token));
   };
@@ -109,6 +113,16 @@ const LogInMaterial = () => {
 
     dispatch(startLogin(email, password));
   };
+
+
+  const clientId= "804016986665-4o6pdrstb389q0s03tn5k523qut440g4.apps.googleusercontent.com";
+  const onSuccess =(res)=>{
+    console.log("login success");
+    console.log(res)
+  }
+  const onFailure =(res)=>{
+    console.log("login fail",res);
+  }
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -157,7 +171,7 @@ const LogInMaterial = () => {
               Iniciar Sesión
             </Button>
             <GoogleLogin
-              clientId="1068418280364-qlcmg4k58169if3h5jis6plnfmvml8e8.apps.googleusercontent.com"
+              clientId="804016986665-4o6pdrstb389q0s03tn5k523qut440g4.apps.googleusercontent.com"
               render={(renderProps) => (
                 <Button
                   fullWidth
