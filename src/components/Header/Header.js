@@ -6,8 +6,8 @@ import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
-    backgroundImage: "url(https://wallpaperaccess.com/full/1976684.jpg)",
-    padding: theme.spacing(8, 0, 70),
+    backgroundImage: "url(https://i.pinimg.com/originals/58/91/17/5891170089718d01281c70ec54ef01bf.jpg)",
+    padding: theme.spacing(8, 0, 7),
     backgroundPosition: ("50%", "10px", "10px", "10px"),
     //[ <percentage> | <length> | left | center | right  ]
 

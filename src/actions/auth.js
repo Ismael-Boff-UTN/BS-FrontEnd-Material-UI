@@ -32,8 +32,9 @@ export const startLogin = (email, password) => {
 export const startLoginGoogle = (id_token) => {
   return async (dispatch) => {
     const response = await fetchNoToken("auth/google", { id_token }, "POST");
+    console.log(response);
     const body = await response.json();
-    //console.log(body);
+    console.log(body);
 
     if (body.msg === "Google OK") {
       localStorage.setItem("tokenGoogle", body.token);

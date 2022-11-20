@@ -74,6 +74,7 @@ export default function ReviewOrder() {
                     <CancelIcon />
                   </IconButton>
                 </ListItemSecondaryAction>
+                
                 <ListItemSecondaryAction className={classes.precio}>
                   <Typography variant="body2" edge="start">
                     $ {item.precioVenta}

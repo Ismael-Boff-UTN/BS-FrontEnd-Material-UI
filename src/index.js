@@ -2,10 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import BuenSaborApp from "./BuenSaborApp";
 import reportWebVitals from "./reportWebVitals";
+import  {  GoogleOAuthProvider  }  from  '@react-oauth/google' ;
 
 ReactDOM.render(
  
-    <BuenSaborApp />,
+  < GoogleOAuthProvider  clientId = "804016986665-4o6pdrstb389q0s03tn5k523qut440g4.apps.googleusercontent.com" > <BuenSaborApp />,</GoogleOAuthProvider >,
   
   document.getElementById("root")
 );
