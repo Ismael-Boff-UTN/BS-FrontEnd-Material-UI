@@ -11,7 +11,7 @@ export const obtenerArticulo = (id) => {
       "GET"
     );
     const body = await response.json();
-    console.log(body);
+    console.log(body.articulo);
 
     if (body.status) {
       dispatch(articulo(body.articulo));

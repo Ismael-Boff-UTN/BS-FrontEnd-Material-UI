@@ -55,6 +55,7 @@ export const ProductsList = () => {
       <Categorias/>
       <Container className={classes.cardGrid} maxWidth="md">
         <Grid container spacing={4}>
+          {console.log(articulos)}
           {articulos.map((art) => (
             <Grid item key={art._id} xs={12} sm={6} md={4}>
               <Product key={art._id} product={art} />
