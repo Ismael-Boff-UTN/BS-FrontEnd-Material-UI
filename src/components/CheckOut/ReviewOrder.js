@@ -14,7 +14,7 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import CancelIcon from "@material-ui/icons/Cancel";
 import IconButton from "@material-ui/core/IconButton";
 
-import { quitarArticuloCart } from "../../actions/cart";
+import { addExtra, quitarArticuloCart } from "../../actions/cart";
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -41,11 +41,16 @@ export default function ReviewOrder() {
   var total = 0;
 
   cart.forEach((item) => {
-    total += item.precioVenta;
+    console.log(cart)
+    total += item.precioUnitario;
   });
 
   const quitarArticulo = (id) =>{
     dispatch(quitarArticuloCart(id));
+  }
+
+  const agregarMismoArt = (id) =>{
+    dispatch(addExtra(id));
   }
 
   return (
@@ -62,22 +67,28 @@ export default function ReviewOrder() {
             <>
               <ListItem className={classes.listItem} key={item._id}>
                 <ListItemAvatar>
-                  <Avatar src={item.imagen} />
+                  <Avatar src={item.articulo.imagen} />
                 </ListItemAvatar>
                 <ListItemText
-                  primary={item.denominacion}
-                  secondary={item.categoria}
+                  primary={item.articulo.denominacion}
+                  secondary={item.cantidad}
                 />
 
                 <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="delete" onClick={() => quitarArticulo(item._id)}>
+                  <IconButton edge="add" aria-label="add" onClick={() => agregarMismoArt(item.articulo._id)}>
+                  <CancelIcon />
+                  </IconButton>
+                </ListItemSecondaryAction>
+
+                <ListItemSecondaryAction>
+                  <IconButton edge="end" aria-label="delete" onClick={() => quitarArticulo(item.articulo._id)}>
                     <CancelIcon />
                   </IconButton>
                 </ListItemSecondaryAction>
                 
                 <ListItemSecondaryAction className={classes.precio}>
                   <Typography variant="body2" edge="start">
-                    $ {item.precioVenta}
+                    $ {item.precioUnitario}
                   </Typography>
                 </ListItemSecondaryAction>
               </ListItem>

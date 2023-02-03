@@ -22,5 +22,6 @@ export const types = {
 
   //Cart
   addArticleToCart: "[cart] adding item to cart",
+  addExtra: "[articles] añadir cantidad",
   articleQuit: "[articles] quiting article",
 };

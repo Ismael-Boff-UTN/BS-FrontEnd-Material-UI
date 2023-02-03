@@ -16,7 +16,6 @@ export default function PagosForm() {
           <Select
             labelId="demo-simple-select-outlined-label"
             id="demo-simple-select-outlined"
-            value=""
             label="Unidad Medida"
             variant="outlined"
             //onChange={onChange}
@@ -24,8 +23,8 @@ export default function PagosForm() {
             required="true"
             fullWidth
           >
-            <MenuItem value="" disabled>
-              Método De Pago
+            <MenuItem value="">
+            Método De Pago
             </MenuItem>
             <MenuItem value={"Efectivo"}>Dinero Efectivo</MenuItem>
             <MenuItem value={"MercadoPago"}>Mercado Pago</MenuItem>

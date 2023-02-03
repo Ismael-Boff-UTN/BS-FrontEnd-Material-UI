@@ -20,7 +20,14 @@ export const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         items: [
-          ...state.items.filter((articulo) => articulo._id !== action.payload),
+          ...state.items.filter((articulo) => articulo.articulo._id !== action.payload),
+        ],
+      };
+    case types.addExtra:
+      return {
+        ...state,
+        items: [
+        ...state.items.filter(articulo => articulo.articulo._id === action.payload ? articulo.cantidad +=1:{})
         ],
       };
     default:

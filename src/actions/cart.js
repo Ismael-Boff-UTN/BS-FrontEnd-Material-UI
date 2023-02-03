@@ -12,10 +12,15 @@ export const obtenerArticulo = (id) => {
     );
     const body = await response.json();
     console.log(body.articulo);
+    
+    var art = new Object();
+    art.articulo = body.articulo;
+    art.cantidad = 1;
+    art.precioUnitario = body.articulo.precioVenta;
 
     if (body.status) {
-      dispatch(articulo(body.articulo));
-      Swal.fire("Exito", `${body.articulo.denominacion} x1 Agregado!`, "success");
+      dispatch(articulo(art));
+      Swal.fire("Exito", `${art.articulo.denominacion} x1 Agregado!`, "success");
     } else {
       Swal.fire("Error", `${body.msg}`, "warning");
     }
@@ -35,5 +40,16 @@ export const quitarArticuloCart = (id) => {
 
 const articuloQuit = (id) => ({
   type: types.articleQuit,
+  payload: id,
+});
+
+export const addExtra = (id) => {
+  return async (dispatch) => {
+    dispatch(addExtraa(id), console.log(id));
+  };
+};
+
+const addExtraa = (id) => ({
+  type: types.addExtra,
   payload: id,
 });
