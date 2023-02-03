@@ -5,6 +5,7 @@ const initialState = {
   items: [],
   domicilio: {},
   tipoPago: null,
+  tipoEnvio: null,
   error: null,
 };
 
@@ -29,6 +30,21 @@ export const cartReducer = (state = initialState, action) => {
         items: [
         ...state.items.filter(articulo => articulo.articulo._id === action.payload ? articulo.cantidad +=1:{})
         ],
+      };
+    case types.addTipoPago:
+      return {
+        ...state,
+        tipoPago: action.payload,
+      };
+    case types.addTipoEnvio:
+      return {
+        ...state,
+        tipoEnvio: action.payload,
+      };
+    case types.addDomicilio:
+      return {
+        ...state,
+        domicilio: action.payload,
       };
     default:
       return state;

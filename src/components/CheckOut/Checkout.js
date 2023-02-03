@@ -7,7 +7,6 @@ import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import AddressForm from "./DomicilioForm";
 import PaymentForm from "./PagosForm";
 import Review from "./ReviewOrder";
 import axios from "axios";
@@ -49,15 +48,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const steps = ["Estado De La Orden", "Domicilio De Envio", "Detalles De Pago"];
+const steps = ["Estado De La Orden", "Detalles De Pago"];
 
 function getStepContent(step) {
   switch (step) {
     case 0:
       return <Review />;
     case 1:
-      return <AddressForm />;
-    case 2:
       return <PaymentForm />;
 
     default:

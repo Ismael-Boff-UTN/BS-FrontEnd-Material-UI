@@ -53,3 +53,36 @@ const addExtraa = (id) => ({
   type: types.addExtra,
   payload: id,
 });
+
+export const addTipoPago = (tipo) => {
+  return async (dispatch) => {
+    dispatch(addTipoPagoo(tipo));
+  };
+};
+
+const addTipoPagoo = (tipo) => ({
+  type: types.addTipoPago,
+  payload: tipo,
+});
+
+export const addTipoEnvio = (tipo) => {
+  return async (dispatch) => {
+    dispatch(addTipoEnvioo(tipo));
+  };
+};
+
+const addTipoEnvioo = (tipo) => ({
+  type: types.addTipoEnvio,
+  payload: tipo,
+});
+
+export const addDomicilio = (domi) => {
+  return async (dispatch) => {
+    dispatch(addDomicilioo(domi));
+  };
+};
+
+const addDomicilioo = (domi) => ({
+  type: types.addDomicilio,
+  payload: domi,
+});

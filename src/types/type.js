@@ -24,4 +24,7 @@ export const types = {
   addArticleToCart: "[cart] adding item to cart",
   addExtra: "[articles] añadir cantidad",
   articleQuit: "[articles] quiting article",
+  addTipoPago: "[cart] adding tipo pago",
+  addTipoEnvio: "[cart] adding tipo envio",
+  addDomicilio: "[cart] adding Domicilio",
 };
