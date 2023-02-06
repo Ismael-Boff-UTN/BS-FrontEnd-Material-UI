@@ -8,6 +8,7 @@ import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import PaymentForm from "./PagosForm";
+import Resumen from "./ResumenCompra";
 import Review from "./ReviewOrder";
 import axios from "axios";
 import swal from "sweetalert2";
@@ -48,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const steps = ["Estado De La Orden", "Detalles De Pago"];
+const steps = ["Estado De La Orden", "Detalles De Pago", "Resumen"];
 
 function getStepContent(step) {
   switch (step) {
@@ -56,7 +57,8 @@ function getStepContent(step) {
       return <Review />;
     case 1:
       return <PaymentForm />;
-
+    case 2:
+      return <Resumen/>
     default:
       throw new Error("Unknown step");
   }
@@ -83,6 +85,7 @@ export default function Checkout() {
   const handleNext = (e) => {
     if(activeStep === steps.length - 1){
       e.preventDefault();
+      
 //getear datos store, si es mp post mp y en endpoint crear entidad pedidos conw status
 //si es efectivo otro endpoint sin el mp
 

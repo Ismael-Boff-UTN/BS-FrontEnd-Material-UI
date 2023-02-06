@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
@@ -11,6 +11,10 @@ export default function DomicilioForm() {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
+/*   useEffect(()=>{
+    setDomPedido(domicilio)
+    console.log(DomPedido)
+  }) */
    
   const cambiolocalidad=(e)=>{
     setDomPedido({localidad: e.target.value, calle: DomPedido.calle, numero: DomPedido.numero})

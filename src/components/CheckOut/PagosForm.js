@@ -6,7 +6,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import AddressForm from "./DomicilioForm";
 import { useSelector, useDispatch } from "react-redux";
-import { addTipoPago, addTipoEnvio } from "../../actions/cart";
+import { addTipoPago, addTipoEnvio} from "../../actions/cart";
 
 
 export default function PagosForm() {
@@ -15,6 +15,7 @@ export default function PagosForm() {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
+  
   function paraEnvio(tipo) {
     console.log(tipo);
     console.log(cart);
@@ -76,10 +77,10 @@ export default function PagosForm() {
   const cambiarTipoPagRedux = (tipo) =>{
     dispatch(addTipoPago(tipo));
   }
-
   const cambiarTipoEnvioRedux = (tipo) =>{
     dispatch(addTipoEnvio(tipo));
   }
+
 
   return (
     <React.Fragment>
