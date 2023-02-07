@@ -54,6 +54,17 @@ const addExtraa = (id) => ({
   payload: id,
 });
 
+export const restaExtra = (id) => {
+  return async (dispatch) => {
+    dispatch(restaExtraa(id), console.log(id));
+  };
+};
+
+const restaExtraa = (id) => ({
+  type: types.restaExtra,
+  payload: id,
+});
+
 export const addTipoPago = (tipo) => {
   return async (dispatch) => {
     dispatch(addTipoPagoo(tipo));

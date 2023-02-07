@@ -11,10 +11,12 @@ import Avatar from "@material-ui/core/Avatar";
 import Divider from "@material-ui/core/Divider/Divider";
 
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import CancelIcon from "@material-ui/icons/Cancel";
 import IconButton from "@material-ui/core/IconButton";
 
-import { addExtra, quitarArticuloCart } from "../../actions/cart";
+import { addExtra, quitarArticuloCart, restaExtra} from "../../actions/cart";
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -27,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   precio: {
-    marginRight: "75px",
+    marginRight: "130px",
   },
 }));
 
@@ -42,7 +44,7 @@ export default function ReviewOrder() {
 
   cart.forEach((item) => {
     console.log(cart)
-    total += item.precioUnitario;
+    total += item.precioUnitario*item.cantidad;;
   });
 
   const quitarArticulo = (id) =>{
@@ -53,6 +55,9 @@ export default function ReviewOrder() {
     dispatch(addExtra(id));
   }
 
+  const restarMismoArt = (id) =>{
+    dispatch(restaExtra(id));
+  }
   return (
     <>
     <Grid>
@@ -65,7 +70,7 @@ export default function ReviewOrder() {
         ) : (
           cart.map((item) => (
             <>
-              <ListItem className={classes.listItem} key={item._id}>
+              <ListItem className={classes.listItem} key={item._id} >
                 <ListItemAvatar>
                   <Avatar src={item.articulo.imagen} />
                 </ListItemAvatar>
@@ -73,25 +78,27 @@ export default function ReviewOrder() {
                   primary={item.articulo.denominacion}
                   secondary={item.cantidad}
                 />
-
                 <ListItemSecondaryAction>
                   <IconButton edge="add" aria-label="add" onClick={() => agregarMismoArt(item.articulo._id)}>
-                  <CancelIcon />
+                  <AddIcon />
                   </IconButton>
-                </ListItemSecondaryAction>
 
-                <ListItemSecondaryAction>
+                  <IconButton edge="rest" aria-label="rest" onClick={() => restarMismoArt(item.articulo._id)}>
+                    <RemoveIcon />
+                  </IconButton>
+
                   <IconButton edge="end" aria-label="delete" onClick={() => quitarArticulo(item.articulo._id)}>
                     <CancelIcon />
                   </IconButton>
                 </ListItemSecondaryAction>
+
                 
                 <ListItemSecondaryAction className={classes.precio}>
                   <Typography variant="body2" edge="start">
                     $ {item.precioUnitario}
                   </Typography>
                 </ListItemSecondaryAction>
-              </ListItem>
+                </ListItem>
               <Divider />
             </>
           ))

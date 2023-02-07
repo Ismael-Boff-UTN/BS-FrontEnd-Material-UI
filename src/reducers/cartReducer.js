@@ -31,6 +31,13 @@ export const cartReducer = (state = initialState, action) => {
         ...state.items.filter(articulo => articulo.articulo._id === action.payload ? articulo.cantidad +=1:{})
         ],
       };
+    case types.restaExtra:
+      return {
+        ...state,
+        items: [
+        ...state.items.filter(articulo => articulo.articulo._id === action.payload  ? articulo.cantidad -= 1:{})
+        ],
+      };
     case types.addTipoPago:
       return {
         ...state,

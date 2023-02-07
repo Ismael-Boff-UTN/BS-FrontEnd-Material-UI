@@ -21,7 +21,7 @@ const PedidosTable = ({pedidos}) => {
         var y= new Int16Array
         y= 90
         ped.detallesPedido.map((p) => (
-          doc.text("producto: "+ p.denominacion + " Cantidad: " + p.cantidad + " Precio c/u: " + p.precioUnitario, 20, y),y=y+10
+          doc.text("producto: "+ p.articulo.denominacion + " Cantidad: " + p.cantidad + " Precio c/u: " + p.precioUnitario, 20, y),y=y+10
         ))
         
         doc.text("--------------------------", 20, y)
@@ -44,7 +44,7 @@ const PedidosTable = ({pedidos}) => {
       render: (rowData) =>
       rowData.detallesPedido.map((p) => (
         <>
-          <p>{p.denominacion}//Cantidad: {p.cantidad}</p>
+          <p>{p.articulo.denominacion}//Cantidad: {p.cantidad}</p>
         </>
       ))
     },

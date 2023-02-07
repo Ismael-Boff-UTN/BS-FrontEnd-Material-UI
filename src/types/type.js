@@ -23,6 +23,7 @@ export const types = {
   //Cart
   addArticleToCart: "[cart] adding item to cart",
   addExtra: "[articles] añadir cantidad",
+  restaExtra: "[articles] restar cantidad",
   articleQuit: "[articles] quiting article",
   addTipoPago: "[cart] adding tipo pago",
   addTipoEnvio: "[cart] adding tipo envio",
