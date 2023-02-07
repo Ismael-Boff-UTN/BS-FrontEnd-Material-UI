@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from 'react';
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
@@ -6,15 +6,23 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import AddressForm from "./DomicilioForm";
 import { useSelector, useDispatch } from "react-redux";
-import { addTipoPago, addTipoEnvio} from "../../actions/cart";
+import { addTipoPago, addTipoEnvio, addDomicilio} from "../../actions/cart";
 
 
 export default function PagosForm() {
   const [tipoPag, setTipoPag] = React.useState("");
   const [tipoEnvio, setTipoEnvio] = React.useState("");
   const cart = useSelector((state) => state.cart);
+  const usuario = useSelector((state) => state.auth.resto);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    añadirDomicilioRedux(usuario.domicilio)
+  },[]);
+
+  const añadirDomicilioRedux = (domi) =>{
+    dispatch(addDomicilio(domi));
+  }
   
   function paraEnvio(tipo) {
     console.log(tipo);

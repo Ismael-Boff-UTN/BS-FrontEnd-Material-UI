@@ -74,6 +74,7 @@ export default function Checkout() {
   var num="12345";
   const dispatch = useDispatch();
 
+
   const handleNext = (e) => {
     if(activeStep === steps.length - 1){
       if (cart.tipoPago=="Efectivo"){
