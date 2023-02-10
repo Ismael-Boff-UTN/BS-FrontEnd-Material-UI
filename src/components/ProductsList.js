@@ -1,5 +1,8 @@
-import React from "react";
+import React , { useEffect, useState } from "react";
 //Mis Componentes
+import axios from "axios";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 import NavBar from "./NavBar/NavBar";
 import Header from "./Header/Header";
 import Product from "./Products/Product";
@@ -24,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(4),
   },
   cardGrid: {
+    backgroundColor: '#FFF7E8',
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8),
   },
@@ -39,24 +43,82 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   footer: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: '#FFF7E8',
     padding: theme.spacing(6),
+  },
+  back:{
+    backgroundColor: '#FFF7E8',
   },
 }));
 
 export const ProductsList = () => {
   const articulos = useSelector((state) => state.articles.articles);
+  const [artiAux, setArtiAux] = useState(articulos || []);
   const classes = useStyles();
+  const [categorias, setCategorias] = useState([]);
+  const [catAux, setCatAux] = useState("");
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/api/categorias")
+      .then((response) => {
+        // Obtenemos los datos
+        setCategorias(response.data.categorias);
+      })
+      .catch((e) => {
+        // Capturamos los errores
+        console.log(e);
+      });
+  }, []);
+
+  useEffect(() => {
+    setArtiAux([]);
+    console.log(artiAux)
+    if(catAux==""){
+      setArtiAux(articulos);
+    }else{
+      var aux=[];
+      articulos.forEach(art => {
+        if(art.categoria == catAux){
+          aux.push(art)
+          setArtiAux([...aux]);
+        }
+      })
+    }
+  }, [catAux]);
+
+  const cambioDeCat=(e)=>{
+     setCatAux(e.target.value)
+  }
 
   return (
-    <>
+    <Container className={classes.back}>
       <NavBar />
       <Header />
       <Categorias/>
       <Container className={classes.cardGrid} maxWidth="md">
         <Grid container spacing={4}>
-          {console.log(articulos)}
-          {articulos.map((art) => (
+        <Select
+          labelId="fil"
+          id="fil"
+          label=""
+          variant="outlined"
+          onChange={cambioDeCat}
+          name="fil"
+          fullWidth
+        >
+          <MenuItem value={""} disabled>CATEGORIAS</MenuItem>
+          <MenuItem value={""}>TODOS</MenuItem>
+          {categorias?.map((cat) => (
+            <MenuItem value={cat.nombre}>{cat.nombre}</MenuItem>
+          ))}
+        </Select>
+        </Grid>
+      </Container>
+      <Container className={classes.cardGrid} maxWidth="md">
+        <Grid container spacing={4}>
+          {console.log(artiAux)}
+          {artiAux.map((art) => (
             <Grid item key={art._id} xs={12} sm={6} md={4}>
               <Product key={art._id} product={art} />
             </Grid>
@@ -64,6 +126,6 @@ export const ProductsList = () => {
         </Grid>
       </Container>
       <Footer />
-    </>
+    </Container>
   );
 };

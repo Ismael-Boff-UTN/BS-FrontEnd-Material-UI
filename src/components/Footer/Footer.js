@@ -19,7 +19,7 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
   footer: {
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: '#FFF7E8',
     padding: theme.spacing(6),
   },
 }));

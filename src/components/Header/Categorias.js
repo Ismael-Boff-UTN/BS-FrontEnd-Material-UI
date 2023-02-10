@@ -45,7 +45,6 @@ export default function SingleLineImageList() {
       .get("http://localhost:4000/api/categorias")
       .then((response) => {
         // Obtenemos los datos
-
         setCategorias(response.data.categorias);
       })
       .catch((e) => {

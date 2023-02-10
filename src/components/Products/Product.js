@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -10,9 +10,19 @@ import CardHeader from "@material-ui/core/CardHeader/CardHeader";
 import Avatar from "@material-ui/core/Avatar/Avatar";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import Chip from "@material-ui/core/Chip/Chip";
+import {Modal} from  "@material-ui/core";
 //Redux
 import { useDispatch } from "react-redux";
 import { obtenerArticulo } from "../../actions/cart";
+//cart
+import Grid from "@material-ui/core/Grid";
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -44,7 +54,71 @@ const Product = ({ product }) => {
   const handleAddItemToCart = (id) => {
     dispatch(obtenerArticulo(id));
   };
+
+  //detalle producto
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+  function verIng(){
+    return <Grid> {product.articuluManufacturadoDetalle?.map((ing) => (<p>{ing.ingredient.denominacion} {ing.cantidad}</p>))}</Grid>
+  }
+
+  const body=(
+    <div>
+      <div aling="center">
+        <h2>
+          {product.denominacion}
+        </h2>
+      </div>
+      <CardMedia
+          className={classes.cardMedia}
+          image={product.imagen}
+          title="Image title"
+      />
+      {verIng()}
+      {product.precioVenta}
+    </div>
+  )
+
+  function mod(){
+    return <div>
+      <Button variant="outlined" onClick={handleClickOpen}>
+      Open form dialog
+    </Button>
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle>Subscribe</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          To subscribe to this website, please enter your email address here. We
+          will send updates occasionally.
+        </DialogContentText>
+        <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Email Address"
+          type="email"
+          fullWidth
+          variant="standard"
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+      </DialogActions>
+    </Dialog>
+  </div>
+  }
+
   return (
+    
     <>
       <Card className={classes.card}>
         <CardHeader
@@ -65,6 +139,27 @@ const Product = ({ product }) => {
           title="Image title"
         />
         <CardContent className={classes.cardContent}></CardContent>
+            <Button className={classes.buttonStyles} size="medium" color="primary" variant="contained" onClick={handleClickOpen}>
+              Detalle
+            </Button>
+            <Dialog open={open} onClose={handleClose}>
+              <DialogTitle>{product.denominacion}</DialogTitle>
+              <DialogContent>
+              <CardMedia
+                className={classes.cardMedia}
+                image={product.imagen}
+                title="Image title"
+              />
+                <DialogContentText>
+                Ingredientes:
+                {verIng()}
+                Precio: {product.precioVenta}
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>Cancel</Button>
+              </DialogActions>
+            </Dialog>
         <CardActions>
           <Button
             className={classes.buttonStyles}

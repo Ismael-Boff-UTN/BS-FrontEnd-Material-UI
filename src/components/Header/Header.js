@@ -17,12 +17,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(4),
   },
   heroText: {
-    backgroundColor: "white",
+    backgroundColor: '#FFF7E8',
     borderRadius: "10px",
     fontFamily: "Dancing Script",
   },
   heroTextSecondary: {
-    backgroundColor: "white",
+    backgroundColor: '#FFF7E8',
     borderRadius: "10px",
   },
   search: {
