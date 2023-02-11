@@ -1,15 +1,9 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import Avatar from "@material-ui/core/Avatar";
 import { styled } from '@mui/material/styles';
-import AddressForm from "./DomicilioForm";
 import { useSelector, useDispatch } from "react-redux";
-import { addTipoPago, addTipoEnvio} from "../../actions/cart";
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -38,11 +32,20 @@ export default function ResumenCompra() {
       function totalCompra() {
         cart.items.forEach((item) => {
             total += item.precioUnitario*item.cantidad;
-        }); 
+        });
+        if(cart.tipoEnvio=="Retiro"){
+            total = total - (total*0.10);
+            return <p>
+            <p>-----------------------------------------------------</p>
+            <p>Descuento del 10% por retirar en local</p>
+            <b>Total: {total}$</b>
+            </p>
+        }else{
         return <p>
             <p>-----------------------------------------------------</p>
             <b>Total: {total}$</b>
         </p>
+        }
       }
 
       function siDelivery() {

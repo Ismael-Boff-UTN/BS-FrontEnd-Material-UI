@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React , { useEffect, useState } from "react";
+import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -49,11 +50,61 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Product = ({ product }) => {
+  const [ingredientes, setIngredientes] = useState([]);
   const classes = useStyles();
   const dispatch = useDispatch();
   const handleAddItemToCart = (id) => {
     dispatch(obtenerArticulo(id));
   };
+
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/api/ingredientes")
+      .then((response) => {
+        // Obtenemos los datos
+        setIngredientes(response.data.ingredientes);
+      })
+      .catch((e) => {
+        // Capturamos los errores
+        console.log(e);
+      });
+  }, []);
+
+  function siTieneStock() {
+    var aux = true;
+    product.articuluManufacturadoDetalle.forEach(ing => {
+      ingredientes.forEach(allIng => {
+        if(ing.ingredient._id == allIng._id){
+          if(allIng.stockActual<allIng.stockMinimo){
+            aux=false;
+          }
+        }
+      })
+    })
+    if(aux==true){
+      return<Button
+            className={classes.buttonStyles}
+            size="medium"
+            color="primary"
+            variant="contained"
+            onClick={() => handleAddItemToCart(product._id)}
+          >
+            <AddShoppingCartIcon /> &nbsp;&nbsp; Comprar
+      </Button>
+    }else{
+      return<Button
+            className={classes.buttonStyles}
+            size="medium"
+            color="primary"
+            variant="contained"
+            //onClick={() => handleAddItemToCart(product._id)}
+            disabled
+          >
+            SIN STOCK
+      </Button>
+    }
+  }
 
   //detalle producto
   const [open, setOpen] = React.useState(false);
@@ -161,15 +212,7 @@ const Product = ({ product }) => {
               </DialogActions>
             </Dialog>
         <CardActions>
-          <Button
-            className={classes.buttonStyles}
-            size="medium"
-            color="primary"
-            variant="contained"
-            onClick={() => handleAddItemToCart(product._id)}
-          >
-            <AddShoppingCartIcon /> &nbsp;&nbsp; Comprar
-          </Button>
+          {siTieneStock()}
 
           <Chip
             variant="outlined"

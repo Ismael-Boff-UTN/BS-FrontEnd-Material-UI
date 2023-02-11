@@ -58,6 +58,7 @@ export const ProductsList = () => {
   const [categorias, setCategorias] = useState([]);
   const [catAux, setCatAux] = useState("");
 
+
   useEffect(() => {
     axios
       .get("http://localhost:4000/api/categorias")
@@ -71,9 +72,9 @@ export const ProductsList = () => {
       });
   }, []);
 
+
   useEffect(() => {
     setArtiAux([]);
-    console.log(artiAux)
     if(catAux==""){
       setArtiAux(articulos);
     }else{
@@ -117,7 +118,6 @@ export const ProductsList = () => {
       </Container>
       <Container className={classes.cardGrid} maxWidth="md">
         <Grid container spacing={4}>
-          {console.log(artiAux)}
           {artiAux.map((art) => (
             <Grid item key={art._id} xs={12} sm={6} md={4}>
               <Product key={art._id} product={art} />

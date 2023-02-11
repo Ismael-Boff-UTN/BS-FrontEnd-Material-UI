@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
@@ -71,7 +71,6 @@ export default function Checkout() {
   const token = localStorage.getItem("token");
   const cart = useSelector((state) => state.cart);
   const usuario = useSelector((state) => state.auth.resto);
-  var num="12345";
   const dispatch = useDispatch();
 
 
@@ -86,8 +85,7 @@ export default function Checkout() {
         })
         .then((res) => {
           //console.log(res);
-          num=res.data.numero;
-          swal.fire("", `${res.data.msg}`, "success");
+          swal.fire({title:"Felicitaciones", html:`${res.data.msg} su pedido es el numero: ${res.data.numero} y se tardar un promedio de ${cuenta()} min`, icon:"success"});
         })
         .catch((e) => {
           console.log(e);
@@ -101,8 +99,7 @@ export default function Checkout() {
         })
         .then((res) => {
           //console.log(res);
-          num=res.data.numero;
-          swal.fire("", `${res.data.msg}`, "success");
+          console.log(res.data.msg);
           axios
           .put(`http://localhost:4000/api/usuarios/addPedidoUsuario/${usuario.uid}`, cart, {
             headers: {
@@ -111,8 +108,7 @@ export default function Checkout() {
           })
           .then((res) => {
             //console.log(res);
-            num=res.data.numero;
-            swal.fire("", `${res.data.msg}`, "success");
+            swal.fire({title:"Felicitaciones", html:`${res.data.msg} su pedido es el numero: ${res.data.numero} y se tardar un promedio de ${cuenta()} min`, icon:"success"});
           })
           .catch((e) => {
             console.log(e);
@@ -130,6 +126,20 @@ export default function Checkout() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+  useEffect(() => {
+    cuenta()
+  },[]);
+  var totalTiempo = 0;
+    function cuenta() {
+        cart.items.forEach(art => {
+            totalTiempo += parseInt(art.articulo.tiempoEstimadoCocina,10);
+        });
+        if(cart.tipoEnvio=="Delivery"){
+            totalTiempo += 10;
+        }
+        return totalTiempo
+  }
 
   return (
     <>
@@ -149,14 +159,10 @@ export default function Checkout() {
           ))}
         </Stepper>
         <React.Fragment>
-          {activeStep === steps.length? (
+        {activeStep === steps.length? (
             <React.Fragment>
-              <Typography variant="h5" gutterBottom>
-                Gracias Por Su Compra!
-              </Typography>
-              <Typography variant="subtitle1">
-                Su Numero De Orden Es #{num}, Se Ha Enviado Un E-Mail Con
-                Detalles De Su Compra.
+              <Typography variant="h2" gutterBottom>
+                CERRAR LA VENTANA
               </Typography>
             </React.Fragment>
           ) : (
