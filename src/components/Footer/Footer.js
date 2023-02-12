@@ -38,7 +38,10 @@ const Footer = () => {
           color="textSecondary"
           component="p"
         >
-          Something here to give a purpose!
+          Nuestro horarios son: Lunes a domingo
+            20:00 a 00:00<br/>
+            Sabado y domingo 
+            11:00 a 15:00
         </Typography>
         <Copyright />
       </footer>

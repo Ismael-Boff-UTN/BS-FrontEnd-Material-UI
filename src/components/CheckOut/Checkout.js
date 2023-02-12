@@ -118,9 +118,18 @@ export default function Checkout() {
           console.log(e);
         });
       }
-
+      setActiveStep(activeStep + 1);
     }
-    setActiveStep(activeStep + 1);
+    if(activeStep==0){
+      if(cart.items.length>0){
+        setActiveStep(activeStep + 1);
+      }
+    }
+    if(activeStep==1){
+      if(cart.tipoEnvio!=null){
+        setActiveStep(activeStep + 1);
+      }
+    }
   };
 
   const handleBack = () => {
