@@ -59,7 +59,7 @@ function getStepContent(step) {
     case 1:
       return <PaymentForm />;
     case 2:
-      return <Resumen/>
+      return <Resumen />
     default:
       throw new Error("Unknown step");
   }
@@ -70,37 +70,16 @@ export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
   const token = localStorage.getItem("token");
   const cart = useSelector((state) => state.cart);
+  const cartItems = useSelector((state) => state.cart.items);
   const usuario = useSelector((state) => state.auth.resto);
   const dispatch = useDispatch();
 
 
+
   const handleNext = (e) => {
-    if(activeStep === steps.length - 1){
-      if (cart.tipoPago=="Efectivo"){
+    if (activeStep === steps.length - 1) {
+      if (cart.tipoPago == "Efectivo") {
         axios
-        .put(`http://localhost:4000/api/usuarios/addPedidoUsuario/${usuario.uid}`, cart, {
-          headers: {
-            "x-token": token,
-          },
-        })
-        .then((res) => {
-          //console.log(res);
-          swal.fire({title:"Felicitaciones", html:`${res.data.msg} su pedido es el numero: ${res.data.numero} y se tardar un promedio de ${cuenta()} min`, icon:"success"});
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-      } else if(cart.tipoPago=="MercadoPago"){
-        axios
-        .post(`http://localhost:4000/api/pagomp`, cart, {
-          headers: {
-            "x-token": token,
-          },
-        })
-        .then((res) => {
-          //console.log(res);
-          console.log(res.data.msg);
-          axios
           .put(`http://localhost:4000/api/usuarios/addPedidoUsuario/${usuario.uid}`, cart, {
             headers: {
               "x-token": token,
@@ -108,25 +87,63 @@ export default function Checkout() {
           })
           .then((res) => {
             //console.log(res);
-            swal.fire({title:"Felicitaciones", html:`${res.data.msg} su pedido es el numero: ${res.data.numero} y se tardar un promedio de ${cuenta()} min`, icon:"success"});
+            swal.fire({ title: "Felicitaciones", html: `${res.data.msg} su pedido es el numero: ${res.data.numero} y se tardar un promedio de ${cuenta()} min`, icon: "success" });
           })
           .catch((e) => {
             console.log(e);
           });
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      } else if (cart.tipoPago == "MercadoPago") {
+        var total = 0;
+            var itemsCart = [];
+            cart.items.forEach((item) => {
+              total += item.precioUnitario * item.cantidad;
+              itemsCart.push({_id : item.articulo._id, denominacion : item.articulo.denominacion, imagen : item.articulo.imagen, categoria : item.articulo.categoria, precioVenta : item.articulo.precioVenta, tipoPago : cart.tipoPago, userId : usuario.uid, tokenUser : token})
+            });
+            console.log("mercado carrito " ,itemsCart);
+        axios
+          .post(`http://localhost:4000/api/pagomp`,itemsCart, {
+            headers: {
+              "x-token": token,
+            },
+          })
+          .then((res) => {
+
+            var total = 0;
+            var itemsCart = [];
+            cart.items.forEach((item) => {
+              total += item.precioUnitario * item.cantidad;
+              itemsCart.push({_id : item.articulo._id, denominacion : item.articulo.denominacion, imagen : item.articulo.imagen, categoria : item.articulo.categoria, precioVenta : item.articulo.precioVenta})
+            });
+            console.log("mercado carrito " ,itemsCart);
+            //console.log(res.data.msg);
+            axios
+              .post(`http://localhost:4000/api/pagomp`, itemsCart, {
+                headers: {
+                  "x-token": token,
+                },
+              })
+              .then((res) => {
+                window.location.href = res.data.response.response.init_point
+                //console.log(res);
+                //swal.fire({ title: "Felicitaciones", html: `${res.data.msg} su pedido es el numero: ${res.data.numero} y se tardar un promedio de ${cuenta()} min`, icon: "success" });
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          })
+          .catch((e) => {
+            console.log(e);
+          });
       }
       setActiveStep(activeStep + 1);
     }
-    if(activeStep==0){
-      if(cart.items.length>0){
+    if (activeStep == 0) {
+      if (cart.items.length > 0) {
         setActiveStep(activeStep + 1);
       }
     }
-    if(activeStep==1){
-      if(cart.tipoEnvio!=null){
+    if (activeStep == 1) {
+      if (cart.tipoEnvio != null) {
         setActiveStep(activeStep + 1);
       }
     }
@@ -138,16 +155,16 @@ export default function Checkout() {
 
   useEffect(() => {
     cuenta()
-  },[]);
+  }, []);
   var totalTiempo = 0;
-    function cuenta() {
-        cart.items.forEach(art => {
-            totalTiempo += parseInt(art.articulo.tiempoEstimadoCocina,10);
-        });
-        if(cart.tipoEnvio=="Delivery"){
-            totalTiempo += 10;
-        }
-        return totalTiempo
+  function cuenta() {
+    cart.items.forEach(art => {
+      totalTiempo += parseInt(art.articulo.tiempoEstimadoCocina, 10);
+    });
+    if (cart.tipoEnvio == "Delivery") {
+      totalTiempo += 10;
+    }
+    return totalTiempo
   }
 
   return (
@@ -168,10 +185,10 @@ export default function Checkout() {
           ))}
         </Stepper>
         <React.Fragment>
-        {activeStep === steps.length? (
+          {activeStep === steps.length ? (
             <React.Fragment>
               <Typography variant="h2" gutterBottom>
-                CERRAR LA VENTANA
+                Espere..
               </Typography>
             </React.Fragment>
           ) : (

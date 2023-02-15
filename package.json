@@ -16,7 +16,8 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
     "jspdf": "^2.5.1",
-    "material-table": "^1.69.3",
+    "jspdf-autotable": "^3.5.28",
+    "material-table": "^1.63.0",
     "react": "^17.0.2",
     "react-avatar-edit": "^1.0.0",
     "react-dom": "^17.0.2",
@@ -24,14 +25,14 @@
     "react-loadingg": "^1.7.2",
     "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3",
+    "react-scripts": "^5.0.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "sweetalert2": "^10.15.7",
     "web-vitals": "^1.1.1"
   },
   "scripts": {
-    "start": "set PORT=3001 && react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
