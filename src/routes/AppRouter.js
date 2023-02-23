@@ -9,6 +9,7 @@ import { PublicRoute } from "./PublicRoute";
 import { PrivateRoute } from "./PrivateRoute";
 import { SemipolarLoading } from "react-loadingg";
 import { obtenerArticulos } from "../actions/articles";
+import MercadoPagoSuccesPayment from "../components/CheckOut/MercadoPagoSuccesPayment";
 
 export const AppRouter = () => {
   const dispatch = useDispatch();
@@ -38,6 +39,12 @@ export const AppRouter = () => {
             exact
             path="/product-list"
             component={ProductsList}
+            isAuthenticated={!!uid}
+          />
+          <PrivateRoute
+            exact
+            path="/mp-successpayment"
+            component={MercadoPagoSuccesPayment}
             isAuthenticated={!!uid}
           />
           

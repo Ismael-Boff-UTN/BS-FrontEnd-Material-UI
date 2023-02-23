@@ -70,9 +70,9 @@ export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
   const token = localStorage.getItem("token");
   const cart = useSelector((state) => state.cart);
-  const cartItems = useSelector((state) => state.cart.items);
+  
   const usuario = useSelector((state) => state.auth.resto);
-  const dispatch = useDispatch();
+  
 
 
 
@@ -93,7 +93,10 @@ export default function Checkout() {
             console.log(e);
           });
       } else if (cart.tipoPago == "MercadoPago") {
-        var total = 0;
+        localStorage.setItem("carritoLocal", JSON.stringify(cart));
+        
+       
+                var total = 0;
             var itemsCart = [];
             cart.items.forEach((item) => {
               total += item.precioUnitario * item.cantidad;

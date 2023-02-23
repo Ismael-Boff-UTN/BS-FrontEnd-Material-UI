@@ -1,4 +1,4 @@
-import React , { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 //Mis Componentes
 import axios from "axios";
 import Select from "@material-ui/core/Select";
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#FFF7E8',
     padding: theme.spacing(6),
   },
-  back:{
+  back: {
     backgroundColor: '#FFF7E8',
   },
   heroTextSecondary: {
@@ -80,12 +80,12 @@ export const ProductsList = () => {
 
   useEffect(() => {
     setArtiAux([]);
-    if(catAux==""){
+    if (catAux == "") {
       setArtiAux(articulos);
-    }else{
-      var aux=[];
+    } else {
+      var aux = [];
       articulos.forEach(art => {
-        if(art.categoria == catAux){
+        if (art.categoria == catAux) {
           aux.push(art)
           setArtiAux([...aux]);
         }
@@ -93,8 +93,8 @@ export const ProductsList = () => {
     }
   }, [catAux]);
 
-  const cambioDeCat=(e)=>{
-     setCatAux(e.target.value)
+  const cambioDeCat = (e) => {
+    setCatAux(e.target.value)
   }
 
   //horario de atencion
@@ -108,8 +108,8 @@ export const ProductsList = () => {
     //por temas de practicidad se ha cambiado el horario de las variables de abajo, cuando se quiera usar cambiarse
     const startTimeFinDeSemana = new Date("2023-02-12T01:00:00");
     const endTimeFinDeSemana = new Date("2023-02-12T23:00:00");
-    
-    if(currentTime.getDay()==0  || currentTime.getDay()==6){
+
+    if (currentTime.getDay() == 0 || currentTime.getDay() == 6) {
       if (currentTime.getHours() >= startTimeFinDeSemana.getHours() && currentTime.getHours() <= endTimeFinDeSemana.getHours()) {
         setShowContent(true);
       }
@@ -121,33 +121,33 @@ export const ProductsList = () => {
 
   }, []);
 
-  function horarioAtencion(){
-    if(showContent==true){
+  function horarioAtencion() {
+    if (showContent == true) {
       return <Grid container spacing={4}>
         {artiAux.map((art) => (
           <Grid item key={art._id} xs={12} sm={6} md={4}>
-            <Product key={art._id} product={art}/>
+            <Product key={art._id} product={art} />
           </Grid>
         ))}
       </Grid>
-    } else{
-      return<Typography
-            variant="h5"
-            align="center"
-            color="textSecondary"
-            paragraph
-            className={classes.heroTextSecondary}
-          >
-            Gracias por su visita<br/>
-            Por el momento se encuentra en un horario fuera de atencion<br/>
-            Nuestro horarios son:<br/>
-            Lunes a domingo<br/>
-            20:00 a 00:00<br/>
-            Sabado y domingo<br/>
-            11:00 a 15:00
+    } else {
+      return <Typography
+        variant="h5"
+        align="center"
+        color="textSecondary"
+        paragraph
+        className={classes.heroTextSecondary}
+      >
+        Gracias por su visita<br />
+        Por el momento se encuentra en un horario fuera de atencion<br />
+        Nuestro horarios son:<br />
+        Lunes a domingo<br />
+        20:00 a 00:00<br />
+        Sabado y domingo<br />
+        11:00 a 15:00
 
 
-          </Typography>
+      </Typography>
 
     }
   }
@@ -156,24 +156,24 @@ export const ProductsList = () => {
     <Container className={classes.back}>
       <NavBar />
       <Header />
-      <Categorias/>
+      <Categorias />
       <Container className={classes.cardGrid} maxWidth="md">
         <Grid container spacing={4}>
-        <Select
-          labelId="fil"
-          id="fil"
-          label=""
-          variant="outlined"
-          onChange={cambioDeCat}
-          name="fil"
-          fullWidth
-        >
-          <MenuItem value={""} disabled>CATEGORIAS</MenuItem>
-          <MenuItem value={""}>TODOS</MenuItem>
-          {categorias?.map((cat) => (
-            <MenuItem value={cat.nombre}>{cat.nombre}</MenuItem>
-          ))}
-        </Select>
+          <Select
+            labelId="fil"
+            id="fil"
+            label="SELECCIONE UNA CATEGORIA"
+            variant="outlined"
+            onChange={cambioDeCat}
+            name="fil"
+            fullWidth
+          >
+            <MenuItem value={""} disabled>CATEGORIAS</MenuItem>
+            <MenuItem value={""}>TODOS</MenuItem>
+            {categorias?.map((cat) => (
+              <MenuItem value={cat.nombre}>{cat.nombre}</MenuItem>
+            ))}
+          </Select>
         </Grid>
       </Container>
       <Container className={classes.cardGrid} maxWidth="md">

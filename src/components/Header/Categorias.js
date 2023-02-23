@@ -3,9 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
 import ImageListItemBar from "@material-ui/core/ImageListItemBar";
-import IconButton from "@material-ui/core/IconButton";
 import axios from "axios";
-import InfoIcon from '@material-ui/icons/Info';
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,20 +54,23 @@ export default function SingleLineImageList() {
 
   return (
     <div className={classes.root}>
+      <Typography
+            component="h2"
+            variant="h2"
+            align="center"
+            color="textPrimary"
+            gutterBottom
+            className={classes.heroText}
+          >
+            Nuestras Categorias
+          </Typography>
       <ImageList className={classes.imageList} cols={2.5}>
         {categorias.map((categoria) => (
           <ImageListItem key={categoria._id}>
             <img src={categoria.img} alt={categoria.nombre} />
             <ImageListItemBar
               title={categoria.nombre}
-              actionIcon={
-                <IconButton
-                  aria-label={`info about `}
-                  className={classes.icon}
-                >
-                  <InfoIcon />
-                </IconButton>
-              }
+
             />
           </ImageListItem>
         ))}
