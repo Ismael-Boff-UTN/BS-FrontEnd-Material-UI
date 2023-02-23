@@ -23,7 +23,6 @@ import { useDispatch } from "react-redux";
 import { obtenerArticulo } from "../../actions/cart";
 //cart
 import Grid from "@material-ui/core/Grid";
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -81,14 +80,14 @@ const Product = ({ product }) => {
     var aux = true;
     product.articuluManufacturadoDetalle.forEach(ing => {
       ingredientes.forEach(allIng => {
-        if (ing.ingredient._id == allIng._id) {
+        if (ing.ingredient._id === allIng._id) {
           if (allIng.stockActual < allIng.stockMinimo) {
             aux = false;
           }
         }
       })
     })
-    if (aux == true) {
+    if (aux === true) {
       return <Button
         className={classes.buttonStyles}
         size="medium"
@@ -139,22 +138,7 @@ const Product = ({ product }) => {
     </ListItem>))}</List></Grid>
   }
 
-  const body = (
-    <div>
-      <div aling="center">
-        <h2>
-          {product.denominacion}
-        </h2>
-      </div>
-      <CardMedia
-        className={classes.cardMedia}
-        image={product.imagen}
-        title="Image title"
-      />
-      {verIng()}
-      {product.precioVenta}
-    </div>
-  )
+
 
 
 
