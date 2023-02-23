@@ -1,4 +1,4 @@
-import React , { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -8,10 +8,16 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import CardHeader from "@material-ui/core/CardHeader/CardHeader";
-import Avatar from "@material-ui/core/Avatar/Avatar";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import Chip from "@material-ui/core/Chip/Chip";
-import {Modal} from  "@material-ui/core";
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import StarIcon from '@mui/icons-material/Star';
+import FastfoodIcon from '@mui/icons-material/Fastfood';
+import Typography from '@mui/material/Typography';
 //Redux
 import { useDispatch } from "react-redux";
 import { obtenerArticulo } from "../../actions/cart";
@@ -75,33 +81,33 @@ const Product = ({ product }) => {
     var aux = true;
     product.articuluManufacturadoDetalle.forEach(ing => {
       ingredientes.forEach(allIng => {
-        if(ing.ingredient._id == allIng._id){
-          if(allIng.stockActual<allIng.stockMinimo){
-            aux=false;
+        if (ing.ingredient._id == allIng._id) {
+          if (allIng.stockActual < allIng.stockMinimo) {
+            aux = false;
           }
         }
       })
     })
-    if(aux==true){
-      return<Button
-            className={classes.buttonStyles}
-            size="medium"
-            color="primary"
-            variant="contained"
-            onClick={() => handleAddItemToCart(product._id)}
-          >
-            <AddShoppingCartIcon /> &nbsp;&nbsp; Comprar
+    if (aux == true) {
+      return <Button
+        className={classes.buttonStyles}
+        size="medium"
+        color="primary"
+        variant="contained"
+        onClick={() => handleAddItemToCart(product._id)}
+      >
+        <AddShoppingCartIcon /> &nbsp;&nbsp; Comprar
       </Button>
-    }else{
-      return<Button
-            className={classes.buttonStyles}
-            size="medium"
-            color="primary"
-            variant="contained"
-            //onClick={() => handleAddItemToCart(product._id)}
-            disabled
-          >
-            SIN STOCK
+    } else {
+      return <Button
+        className={classes.buttonStyles}
+        size="medium"
+        color="primary"
+        variant="contained"
+        //onClick={() => handleAddItemToCart(product._id)}
+        disabled
+      >
+        SIN STOCK
       </Button>
     }
   }
@@ -118,11 +124,22 @@ const Product = ({ product }) => {
   };
 
 
-  function verIng(){
-    return <Grid> {product.articuluManufacturadoDetalle?.map((ing) => (<p>{ing.ingredient.denominacion} {ing.cantidad}</p>))}</Grid>
+
+  function verIng() {
+    return <Grid> <List
+      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+      aria-label="contacts"
+    >{product.articuluManufacturadoDetalle?.map((ing) => (<ListItem disablePadding>
+      <ListItemButton>
+        <ListItemIcon>
+          <StarIcon />
+        </ListItemIcon>
+        <ListItemText primary={ing.ingredient.denominacion} />
+      </ListItemButton>
+    </ListItem>))}</List></Grid>
   }
 
-  const body=(
+  const body = (
     <div>
       <div aling="center">
         <h2>
@@ -130,58 +147,30 @@ const Product = ({ product }) => {
         </h2>
       </div>
       <CardMedia
-          className={classes.cardMedia}
-          image={product.imagen}
-          title="Image title"
+        className={classes.cardMedia}
+        image={product.imagen}
+        title="Image title"
       />
       {verIng()}
       {product.precioVenta}
     </div>
   )
 
-  function mod(){
-    return <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-      Open form dialog
-    </Button>
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Subscribe</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          To subscribe to this website, please enter your email address here. We
-          will send updates occasionally.
-        </DialogContentText>
-        <TextField
-          autoFocus
-          margin="dense"
-          id="name"
-          label="Email Address"
-          type="email"
-          fullWidth
-          variant="standard"
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Cancelar</Button>
-      </DialogActions>
-    </Dialog>
-  </div>
-  }
+
 
   return (
-    
+
     <>
       <Card className={classes.card}>
         <CardHeader
           avatar={
-            <Avatar
-              aria-label="recipe"
-              variant="rounded"
-              className={classes.avatar}
-            ></Avatar>
+
+            <FastfoodIcon />
           }
-          title={product.denominacion}
-          
+          title={  <Typography gutterBottom variant="h5" component="div">
+          {product.denominacion}
+        </Typography>}
+
           subheader={product.tiempoEstimadoCocina > 0 ? `Tiempo Preparación : ${product.tiempoEstimadoCocina} min.` : ""}
         />
         <CardMedia
@@ -190,27 +179,33 @@ const Product = ({ product }) => {
           title="Image title"
         />
         <CardContent className={classes.cardContent}></CardContent>
-            <Button className={classes.buttonStyles} size="medium" color="primary" variant="contained" onClick={handleClickOpen}>
-              Detalle
-            </Button>
-            <Dialog open={open} onClose={handleClose}>
-              <DialogTitle>{product.denominacion}</DialogTitle>
-              <DialogContent>
-              <CardMedia
-                className={classes.cardMedia}
-                image={product.imagen}
-                title="Image title"
+        {product.esManufacturado === true ? <Button className={classes.buttonStyles} size="medium" color="primary" variant="contained" onClick={handleClickOpen}>
+          Detalle
+        </Button> : <></>}
+
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>{product.denominacion}</DialogTitle>
+          <DialogContent>
+            <CardMedia
+              className={classes.cardMedia}
+              image={product.imagen}
+              title="Image title"
+            />
+            <DialogContentText>
+              <DialogTitle>Ingredientes</DialogTitle>
+              {verIng()}
+              <Chip
+                variant="outlined"
+                color="secondary"
+                icon={<MonetizationOnIcon />}
+                label={"Precio : " + product.precioVenta + " c/u"}
               />
-                <DialogContentText>
-                Ingredientes:
-                {verIng()}
-                Precio: {product.precioVenta}
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
-              </DialogActions>
-            </Dialog>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+          </DialogActions>
+        </Dialog>
         <CardActions>
           {siTieneStock()}
 

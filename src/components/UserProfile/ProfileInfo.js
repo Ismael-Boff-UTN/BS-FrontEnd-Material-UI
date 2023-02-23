@@ -8,7 +8,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import PedidosTable from "./PedidosTable";
 import Avatar from "@material-ui/core/Avatar";
-
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "200px",
     minHeight: "200px",
     minWidth: "200px",
-    alignContent : "center"
+    alignContent: "center"
   },
 }));
 
@@ -55,15 +56,45 @@ const ProfileInfo = ({ usuario }) => {
   const classes = useStyles();
   const [editar, setEditar] = useState(true);
   //const [user, setUser] = useState(usuario);
+  const [profileData, setProfileData] = useState();
+  const {  uid } = useSelector((state) => state.auth);
 
-  const onEditar = (e) => {
+  const onEditar = (e,data) => {
     e.preventDefault();
     setEditar(false);
+    setProfileData(data)
   };
   const onCancelEdit = (e) => {
     e.preventDefault();
     setEditar(true);
   };
+
+
+  const onUpdateProfileData = (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem("token");
+    
+
+    axios
+    .put(
+      `http://localhost:4000/api/usuarios/${uid}`,
+      profileData,{
+        headers: {
+          "x-token": token,
+        },
+      })
+      .then((response) => {
+        // Obtenemos los datos
+
+        // setUsuarios(response.data.usuarios);
+      })
+      .catch((e) => {
+        // Capturamos los errores
+        console.log(e);
+      });
+
+  }
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -159,7 +190,7 @@ const ProfileInfo = ({ usuario }) => {
                 color="secondary"
                 className={classes.submit}
                 size="large"
-                onClick={onEditar}
+                //onClick={onEditar(e, data)}
               >
                 Editar
               </Button>
@@ -183,7 +214,7 @@ const ProfileInfo = ({ usuario }) => {
                   color="secondary"
                   className={classes.submit}
                   size="large"
-                  //onClick={onCancelEdit}
+                  //onClick={onUpdateProfileData()}
                 >
                   Guardar Cambios
                 </Button>
