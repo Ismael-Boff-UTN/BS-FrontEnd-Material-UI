@@ -31,7 +31,7 @@ export const startLogin = (email, password) => {
 
 export const startLoginGoogle = (id_token) => {
   return async (dispatch) => {
-    const response = await fetchNoToken("auth/google", {id_token}, "POST");
+    const response = await fetchNoToken("auth/google", { id_token }, "POST");
     console.log(response);
     const body = await response.json();
     console.log(body);
@@ -70,7 +70,7 @@ export const startRegister = (
       "POST"
     );
     const body = await response.json();
-    console.log(body);
+
 
     if (body.msg === "Login OK") {
       localStorage.setItem("token", body.token);
@@ -82,6 +82,8 @@ export const startRegister = (
           name: body.usuario.nombre,
         })
       );
+
+      Swal.fire("Usuario Registrado Con Exito!", "success");
     } else {
       Swal.fire("", `${body.errors[0].msg}`, "warning");
     }
